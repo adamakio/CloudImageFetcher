@@ -1,0 +1,52 @@
+#include <iostream>
+#include <filesystem>
+
+/**
+ * @brief Prints the help message.
+ * @param program_name The name of the program.
+ */
+void print_help_message(const std::string& program_name) {
+    std::string exec_name = std::filesystem::path(program_name).filename().stem().string();
+    std::cout << "Usage: " << exec_name << " [OPTIONS]\n"
+        << "Options:\n"
+        << "  --releases         List supported releases.\n"
+        << "  --current          Find the current LTS version.\n"
+        << "  --sha256 <pubname> Find the SHA256 checksum of a release by pubname.\n"
+        << "  --help             Display this help message.\n\n"
+        << "Examples:\n"
+        << "  " << exec_name << " --releases\n"
+        << "  " << exec_name << " --current\n"
+        << "  " << exec_name << " --sha256 ubuntu-lucid-10.04-amd64-server-20150427\n";
+}
+
+int main(int argc, char** argv) {
+    if (argc < 2) {
+        print_help_message(argv[0]);
+        return 1;
+    }
+
+    std::string arg1 = argv[1];
+
+    if (arg1 == "--releases") {
+        // TODO: Implement method to list supported releases
+        std::cout << "Not implemented yet";
+    }
+    else if (arg1 == "--current") {
+        // TODO: Implement method to find the current LTS version
+        std::cout << "Not implemented yet";
+    }
+    else if (arg1 == "--sha256" && argc > 2) {
+        // TODO: Implement method to find SHA256 of disk1.img of given pubname
+        std::cout << "Not implemented yet";
+    }
+    else if (arg1 == "--help") {
+        print_help_message(argv[0]);
+    }
+    else {
+        std::cerr << "Invalid arguments.\n";
+        print_help_message(argv[0]);
+        return 1;
+    }
+
+    return 0;
+}
