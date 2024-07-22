@@ -11,7 +11,7 @@ set(CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/vcpkg/installed/x64-windows")
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
-add_executable(CloudImageFetcher "${PROJECT_SOURCE_DIR}/src/main.cpp")
+add_executable(CloudImageFetcher "src/main.cpp" "src/ImageFetcher.cpp")
 
 # Link libraries
 find_package(nlohmann_json REQUIRED)

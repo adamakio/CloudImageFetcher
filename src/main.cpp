@@ -22,6 +22,10 @@ void print_help_message(const std::string& program_name) {
 }
 
 int main(int argc, char** argv) {
+    const std::string url = "https://cloud-images.ubuntu.com/releases/streams/v1/com.ubuntu.cloud:released:download.json";
+    ImageFetcher fetcher(url);
+
+
     if (argc < 2) {
         print_help_message(argv[0]);
         return 1;
