@@ -1,6 +1,8 @@
 #include <iostream>
 #include <filesystem>
 
+#include "ImageFetcher.h"
+
 /**
  * @brief Prints the help message.
  * @param program_name The name of the program.
