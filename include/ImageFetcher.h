@@ -1,5 +1,5 @@
-#ifndef UBUNTU_IMAGE_FETCHER_H
-#define UBUNTU_IMAGE_FETCHER_H
+#ifndef IMAGE_FETCHER_H
+#define IMAGE_FETCHER_H
 
 #include "ImageFetcherInterface.h"
 #include <curl/curl.h>
@@ -7,13 +7,13 @@
 /**
  * @brief Derived class implementing the ImageFetcherInterface for Ubuntu cloud images.
  */
-class UbuntuImageFetcher : public ImageFetcherInterface {
+class ImageFetcher : public ImageFetcherInterface {
 public:
     /**
      * @brief Constructs a new UbuntuImageFetcher object.
      * @param url The URL of the JSON data.
      */
-    UbuntuImageFetcher(const std::string& url);
+    ImageFetcher(const std::string& url);
 
     std::map<std::string, nlohmann::json> get_supported_releases() const override;
     std::tuple<std::string, std::string> get_current_lts_version() const override;
@@ -27,4 +27,4 @@ private:
     nlohmann::json fetch_json_data();
 };
 
-#endif // UBUNTU_IMAGE_FETCHER_H
+#endif // IMAGE_FETCHER_H
