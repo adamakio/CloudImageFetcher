@@ -13,7 +13,7 @@ The data is fetched from the URL: [https://cloud-images.ubuntu.com/releases/stre
 
 - CMake 3.14 or higher
 - C++17 compatible compiler (e.g., g++, clang++)
-- libcurl
+- libcurl (with openssl and zlib)
 - nlohmann-json
 
 ## Build Instructions
@@ -27,9 +27,9 @@ The data is fetched from the URL: [https://cloud-images.ubuntu.com/releases/stre
 2. Download dependencies using vcpkg:
     ```
     ./vcpkg/bootstrap-vcpkg.bat (Windows)
-    ./vcpkg/bootstrap-vcpkg.sh (Linux)
+    ./vcpkg/bootstrap-vcpkg.sh (Linux/MacOS)
     ./vcpkg/vcpkg integrate install
-    ./vcpkg/vcpkg install nlohmann-json curl
+    ./vcpkg/vcpkg install nlohmann-json curl openssl zlib
     ```
     
 2. Create a build directory:
@@ -46,12 +46,16 @@ The data is fetched from the URL: [https://cloud-images.ubuntu.com/releases/stre
 4. Build the project:
 
 For Windows:
-- Run the following command:
 	```
 	cmake --build . --config Release
     cd Release
     ./CloudImageFetcher
 	```
+For Linux:
+    ```
+    make
+    ./CloudImageFetcher
+	```     
 
 ## Usage
 The executable `CloudImageFetcher` provides several options:
