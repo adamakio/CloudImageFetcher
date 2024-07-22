@@ -32,12 +32,12 @@ int main(int argc, char** argv) {
     if (arg1 == "--releases") {
         const std::string url = "https://cloud-images.ubuntu.com/releases/streams/v1/com.ubuntu.cloud:released:download.json";
         ImageFetcher fetcher(url);
-
-        auto supported_releases = fetcher.get_supported_releases();
+        bool include_versions = (argc > 2 && std::string(argv[2]) == "--versions");
+        auto supported_releases = fetcher.get_supported_releases(include_versions);
         for (const auto& product : supported_releases) {
             std::cout << product.second.at("release_title").get<std::string>() << " ("
                 << product.second.at("release_codename").get<std::string>() << "): " << product.first << "\n";
-            if (argc > 2 && std::string(argv[2]) == "--versions") {
+            if (include_versions) {
                 for (const auto& version : product.second.at("versions")) {
                     std::cout << "    " << version.at("version").get<std::string>() << ": "
                         << version.at("pubname").get<std::string>() << "\n";
@@ -45,6 +45,7 @@ int main(int argc, char** argv) {
                 std::cout << "\n";
             }
         }
+        
     }
     else if (arg1 == "--current") {
 

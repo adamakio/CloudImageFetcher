@@ -17,7 +17,7 @@ public:
      * @brief Gets the list of supported releases.
      * @return A map of supported releases and their details.
      */
-    virtual std::map<std::string, nlohmann::json> get_supported_releases() const = 0;
+    virtual std::map<std::string, nlohmann::json> get_supported_releases(bool include_versions) const = 0;
 
     /**
      * @brief Gets the current LTS version.

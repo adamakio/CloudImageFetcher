@@ -37,7 +37,7 @@ nlohmann::json ImageFetcher::fetch_json_data() {
     return nlohmann::json::parse(readBuffer);
 }
 
-std::map<std::string, nlohmann::json> ImageFetcher::get_supported_releases() const {
+std::map<std::string, nlohmann::json> ImageFetcher::get_supported_releases(bool include_versions) const {
     // Assuming the JSON is not necessarily ordered and we must check every product
     std::map<std::string, nlohmann::json> supported_releases;
     for (const auto& product : json_data["products"].items()) {
@@ -47,11 +47,14 @@ std::map<std::string, nlohmann::json> ImageFetcher::get_supported_releases() con
                 {"release_title", product.value().at("release_title")},
                 {"versions", nlohmann::json::array()}
             };
+            if (!include_versions) {
+				continue;
+			}
             for (const auto& version : product.value().at("versions").items()) {
                 supported_releases[product.key()]["versions"].push_back({
                     {"version", version.key()},
                     {"pubname", version.value().at("pubname")}
-                    });
+                });
             }
         }
     }

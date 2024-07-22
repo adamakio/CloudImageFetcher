@@ -15,7 +15,7 @@ public:
      */
     ImageFetcher(const std::string& url);
 
-    std::map<std::string, nlohmann::json> get_supported_releases() const override;
+    std::map<std::string, nlohmann::json> get_supported_releases(bool include_versions) const override;
     std::tuple<std::string, std::string> get_current_lts_version() const override;
     std::string get_sha256_checksum(const std::string& pubname) const override;
 
