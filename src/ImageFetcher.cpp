@@ -79,5 +79,14 @@ std::tuple<std::string, std::string> ImageFetcher::get_current_lts_version() con
 };
 
 std::string ImageFetcher::get_sha256_checksum(const std::string& pubname) const {
+    for (const auto& product : json_data["products"].items()) {
+        for (const auto& version : product.value().at("versions").items()) {
+            if (version.value().at("pubname") == pubname) {
+                if (version.value().at("items").contains("disk1.img")) {
+                    return version.value().at("items").at("disk1.img").at("sha256").get<std::string>();
+                }
+            }
+        }
+    }
     return "";
-};
+}

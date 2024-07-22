@@ -58,8 +58,14 @@ int main(int argc, char** argv) {
         }
     }
     else if (arg1 == "--sha256" && argc > 2) {
-        // TODO: Implement method to find SHA256 of disk1.img of given pubname
-        std::cout << "Not implemented yet";
+        std::string pubname = argv[2];
+        std::string sha256 = fetcher.get_sha256_checksum(pubname);
+        if (!sha256.empty()) {
+            std::cout << "SHA256 checksum for " << pubname << " is " << sha256 << "\n";
+        }
+        else {
+            std::cout << "Ubuntu release for " << pubname << "not found.\n";
+        }
     }
     else if (arg1 == "--help") {
         print_help_message(argv[0]);
