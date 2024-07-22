@@ -20,8 +20,8 @@ The data is fetched from the URL: [https://cloud-images.ubuntu.com/releases/stre
 
 1. Clone the repository:
     ```
-    git clone --recurse-submodules <repository-url>
-    cd <repository-directory>
+    git clone --recurse-submodules https://github.com/adamakio/CloudImageFetcher.git
+    cd CloudImageFetcher
     ```
 
 2. Download dependencies using vcpkg:
