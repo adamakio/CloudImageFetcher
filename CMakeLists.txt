@@ -7,7 +7,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Add vcpkg toolchain
 set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake")
-set(CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/vcpkg/installed/x64-windows")
+
+# Set platform-dependent CMAKE_PREFIX_PATH
+if (WIN32)
+    set(CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/vcpkg/installed/x64-windows")
+elseif (UNIX AND NOT APPLE)
+    set(CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/vcpkg/installed/x64-linux")
+elseif (APPLE)
+    set(CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/vcpkg/installed/x64-osx")
+endif()
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
