@@ -18,7 +18,7 @@ The data is fetched from the URL: [https://cloud-images.ubuntu.com/releases/stre
 
 1. Clone the repository:
     ```
-    git clone <repository-url>
+    git clone --recurse-submodules <repository-url>
     cd <repository-directory>
     ```
 
