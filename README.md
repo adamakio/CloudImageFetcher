@@ -45,13 +45,13 @@ The data is fetched from the URL: [https://cloud-images.ubuntu.com/releases/stre
 
 4. Build the project:
 
-For Windows:
+- For Windows:
 	```
 	cmake --build . --config Release
     cd Release
     ./CloudImageFetcher
 	```
-For Linux:
+- For Linux:
     ```
     make
     ./CloudImageFetcher
