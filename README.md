@@ -27,9 +27,10 @@ The data is fetched from the URL: [https://cloud-images.ubuntu.com/releases/stre
 2. Download dependencies using vcpkg:
     ```
     ./vcpkg/bootstrap-vcpkg.bat (Windows)
-    ./vcpkg/bootstrap-vcpkg.sh (Linux/MacOS)
+    ./vcpkg/bootstrap-vcpkg.sh (Linux)
     ./vcpkg/vcpkg integrate install
-    ./vcpkg/vcpkg install nlohmann-json curl openssl zlib
+    ./vcpkg/vcpkg install nlohmann-json curl
+    ./vcpkg/vcpkg install openssl zlib (Linux)
     ```
     
 2. Create a build directory:
