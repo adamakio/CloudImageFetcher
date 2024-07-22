@@ -25,11 +25,13 @@ The data is fetched from the URL: [https://cloud-images.ubuntu.com/releases/stre
     ```
 
 2. Download dependencies using vcpkg:
-For windows:
     ```
-    ./vcpkg/bootstrap-vcpkg.bat
+    ./vcpkg/bootstrap-vcpkg.bat (Windows)
+    ./vcpkg/bootstrap-vcpkg.sh (Linux)
+    ./vcpkg/vcpkg integrate install
     ./vcpkg/vcpkg install nlohmann-json curl
-	```
+    ```
+    
 2. Create a build directory:
     ```
     mkdir build
