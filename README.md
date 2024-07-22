@@ -11,8 +11,10 @@ The data is fetched from the URL: [https://cloud-images.ubuntu.com/releases/stre
 
 ## Prerequisites
 
-- CMake 3.10 or higher
+- CMake 3.14 or higher
 - C++17 compatible compiler (e.g., g++, clang++)
+- libcurl
+- nlohmann-json
 
 ## Build Instructions
 
@@ -22,6 +24,12 @@ The data is fetched from the URL: [https://cloud-images.ubuntu.com/releases/stre
     cd <repository-directory>
     ```
 
+2. Download dependencies using vcpkg:
+For windows:
+    ```
+    ./vcpkg/bootstrap-vcpkg.bat
+    ./vcpkg/vcpkg install nlohmann-json curl
+	```
 2. Create a build directory:
     ```
     mkdir build
