@@ -79,14 +79,26 @@ std::tuple<std::string, std::string> ImageFetcher::get_current_lts_version() con
 };
 
 std::string ImageFetcher::get_sha256_checksum(const std::string& pubname) const {
+    // Extract relevant parts from the pubname
+    auto parts = pubname.substr(7); // Remove the 'ubuntu-' prefix
+    auto release_pos = parts.find('-');
+    auto release = parts.substr(0, release_pos);
+    auto arch_pos = parts.find('-', release_pos + 1);
+    auto version = parts.substr(release_pos + 1, arch_pos - release_pos - 1);
+    auto date_pos = parts.rfind('-');
+    auto date = parts.substr(date_pos + 1);
+
     for (const auto& product : json_data["products"].items()) {
-        for (const auto& version : product.value().at("versions").items()) {
-            if (version.value().at("pubname") == pubname) {
-                if (version.value().at("items").contains("disk1.img")) {
-                    return version.value().at("items").at("disk1.img").at("sha256").get<std::string>();
+        if (product.value().at("release") == release && product.value().at("version") == version) {
+            for (const auto& ver : product.value().at("versions").items()) {
+                if (ver.key() == date && ver.value().at("pubname") == pubname) {
+                    if (ver.value().at("items").contains("disk1.img")) {
+                        return ver.value().at("items").at("disk1.img").at("sha256").get<std::string>();
+                    }
                 }
             }
         }
     }
+
     return "";
 }
