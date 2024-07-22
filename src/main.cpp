@@ -13,6 +13,7 @@ void print_help_message(const std::string& program_name) {
         << "Options:\n"
         << "  --releases         List supported releases.\n"
         << "  --current          Find the current LTS version.\n"
+        << "  --versions         List versions of each release.\n"
         << "  --sha256 <pubname> Find the SHA256 checksum of a release by pubname.\n"
         << "  --help             Display this help message.\n\n"
         << "Examples:\n"
@@ -34,8 +35,18 @@ int main(int argc, char** argv) {
     std::string arg1 = argv[1];
 
     if (arg1 == "--releases") {
-        // TODO: Implement method to list supported releases
-        std::cout << "Not implemented yet";
+        auto supported_releases = fetcher.get_supported_releases();
+        for (const auto& product : supported_releases) {
+            std::cout << product.second.at("release_title").get<std::string>() << " ("
+                << product.second.at("release_codename").get<std::string>() << "): " << product.first << "\n";
+            if (argc > 2 && std::string(argv[2]) == "--versions") {
+                for (const auto& version : product.second.at("versions")) {
+                    std::cout << "    " << version.at("version").get<std::string>() << ": "
+                        << version.at("pubname").get<std::string>() << "\n";
+                }
+                std::cout << "\n";
+            }
+        }
     }
     else if (arg1 == "--current") {
         // TODO: Implement method to find the current LTS version

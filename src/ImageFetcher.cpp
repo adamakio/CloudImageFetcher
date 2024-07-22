@@ -40,6 +40,21 @@ nlohmann::json ImageFetcher::fetch_json_data() {
 
 std::map<std::string, nlohmann::json> ImageFetcher::get_supported_releases() const {
     std::map<std::string, nlohmann::json> supported_releases;
+    for (const auto& product : json_data["products"].items()) {
+        if (product.value().at("supported").get<bool>()) {
+            supported_releases[product.key()] = {
+                {"release_codename", product.value().at("release_codename")},
+                {"release_title", product.value().at("release_title")},
+                {"versions", nlohmann::json::array()}
+            };
+            for (const auto& version : product.value().at("versions").items()) {
+                supported_releases[product.key()]["versions"].push_back({
+                    {"version", version.key()},
+                    {"pubname", version.value().at("pubname")}
+                    });
+            }
+        }
+    }
     return supported_releases;
 }
 
