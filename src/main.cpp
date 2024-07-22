@@ -49,8 +49,13 @@ int main(int argc, char** argv) {
         }
     }
     else if (arg1 == "--current") {
-        // TODO: Implement method to find the current LTS version
-        std::cout << "Not implemented yet";
+        auto [title, codename] = fetcher.get_current_lts_version();
+        if (!title.empty() && !codename.empty()) {
+            std::cout << "Current Ubuntu LTS version is " << title << " (" << codename << ")\n";
+        }
+        else {
+            std::cout << "No LTS version found.\n";
+        }
     }
     else if (arg1 == "--sha256" && argc > 2) {
         // TODO: Implement method to find SHA256 of disk1.img of given pubname

@@ -8,7 +8,6 @@
  */
 ImageFetcher::ImageFetcher(const std::string& url) : url(url) {
     json_data = fetch_json_data();
-    std::cout << "JSON data fetched with content_id " << json_data["content_id"] << std::endl;
 }
 
 size_t ImageFetcher::WriteCallback(void* contents, size_t size, size_t nmemb, std::string* s) {
@@ -59,7 +58,24 @@ std::map<std::string, nlohmann::json> ImageFetcher::get_supported_releases() con
 }
 
 std::tuple<std::string, std::string> ImageFetcher::get_current_lts_version() const {
-    return std::make_tuple("", "");
+    std::string latest_lts_title;
+    std::string latest_lts_codename;
+    std::string latest_version;
+
+    for (const auto& product : json_data["products"].items()) {
+        const auto& details = product.value();
+        if (details.contains("release_title") && details["release_title"].get<std::string>().find("LTS") != std::string::npos) {
+            std::string version = details["version"].get<std::string>();
+            // Assuming we want the latest major version and not the latest release date
+            if (latest_version.empty() || details["version"].get<std::string>() > latest_version) {
+                latest_version = version;
+                latest_lts_title = details["release_title"].get<std::string>();
+                latest_lts_codename = details["release_codename"].get<std::string>();
+            }
+        }
+    }
+
+    return { latest_lts_title, latest_lts_codename };
 };
 
 std::string ImageFetcher::get_sha256_checksum(const std::string& pubname) const {
