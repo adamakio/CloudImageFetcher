@@ -23,18 +23,16 @@ void print_help_message(const std::string& program_name) {
 }
 
 int main(int argc, char** argv) {
-    const std::string url = "https://cloud-images.ubuntu.com/releases/streams/v1/com.ubuntu.cloud:released:download.json";
-    ImageFetcher fetcher(url);
-
-
     if (argc < 2) {
         print_help_message(argv[0]);
         return 1;
     }
-
     std::string arg1 = argv[1];
-
+    
     if (arg1 == "--releases") {
+        const std::string url = "https://cloud-images.ubuntu.com/releases/streams/v1/com.ubuntu.cloud:released:download.json";
+        ImageFetcher fetcher(url);
+
         auto supported_releases = fetcher.get_supported_releases();
         for (const auto& product : supported_releases) {
             std::cout << product.second.at("release_title").get<std::string>() << " ("
@@ -49,6 +47,10 @@ int main(int argc, char** argv) {
         }
     }
     else if (arg1 == "--current") {
+
+        const std::string url = "https://cloud-images.ubuntu.com/releases/streams/v1/com.ubuntu.cloud:released:download.json";
+        ImageFetcher fetcher(url);
+
         auto [title, codename] = fetcher.get_current_lts_version();
         if (!title.empty() && !codename.empty()) {
             std::cout << "Current Ubuntu LTS version is " << title << " (" << codename << ")\n";
@@ -58,6 +60,9 @@ int main(int argc, char** argv) {
         }
     }
     else if (arg1 == "--sha256" && argc > 2) {
+        const std::string url = "https://cloud-images.ubuntu.com/releases/streams/v1/com.ubuntu.cloud:released:download.json";
+        ImageFetcher fetcher(url);
+
         std::string pubname = argv[2];
         std::string sha256 = fetcher.get_sha256_checksum(pubname);
         if (!sha256.empty()) {
