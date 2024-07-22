@@ -38,6 +38,7 @@ nlohmann::json ImageFetcher::fetch_json_data() {
 }
 
 std::map<std::string, nlohmann::json> ImageFetcher::get_supported_releases() const {
+    // Assuming the JSON is not necessarily ordered and we must check every product
     std::map<std::string, nlohmann::json> supported_releases;
     for (const auto& product : json_data["products"].items()) {
         if (product.value().at("supported").get<bool>()) {
@@ -58,6 +59,7 @@ std::map<std::string, nlohmann::json> ImageFetcher::get_supported_releases() con
 }
 
 std::tuple<std::string, std::string> ImageFetcher::get_current_lts_version() const {
+    // Assuming the JSON is not necessarily ordered and we must check every product
     std::string latest_lts_title;
     std::string latest_lts_codename;
     std::string latest_version;
